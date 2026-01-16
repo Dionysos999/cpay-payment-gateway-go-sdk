@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./.env*)",
+      "Read(~/.ssh/*)",
+      "Bash(git:push:--force)"
+    ]
+  }
+}

@@ -11,19 +11,25 @@ import (
 )
 
 func GenSign(p map[string]interface{}, salt string) string {
-	delete(p, "sign")
+	// Create a copy of the map to avoid modifying the original
+	params := make(map[string]interface{}, len(p))
+	for k, v := range p {
+		if k != "sign" {
+			params[k] = v
+		}
+	}
 
-	counter := len(p)
+	counter := len(params)
 	ks := make([]string, 0, counter)
 
-	for k := range p {
+	for k := range params {
 		ks = append(ks, k)
 	}
 	sort.Strings(ks)
 
 	qs := ""
 	for i := 0; i < counter; i++ {
-		var s = p[ks[i]]
+		var s = params[ks[i]]
 		tmp := fmt.Sprintf("%v", s)
 		switch s.(type) {
 		case int64:

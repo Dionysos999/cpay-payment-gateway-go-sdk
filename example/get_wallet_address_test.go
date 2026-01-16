@@ -10,7 +10,7 @@ import (
 )
 
 func TestGetWalletAddress(t *testing.T) {
-	client, _ := service.NewClientWithSecret(20000205, "03dexh7nl4ywwaw2uuerge8ofxm4y0od")
+	client := service.NewClientWithSecret(20000205, "03dexh7nl4ywwaw2uuerge8ofxm4y0od")
 
 	client.WithConfig(sdk.NewDefaultSandBoxEnv().
 		WithTimeout(time.Second * 5).

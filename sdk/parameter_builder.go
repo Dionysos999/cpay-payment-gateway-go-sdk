@@ -4,21 +4,9 @@ import (
 	"fmt"
 	"net/http"
 	urllib "net/url"
-	"reflect"
 
 	"github.com/cpayfinance/cpay-payment-gateway-go-sdk/sdk/log"
-	"github.com/cpayfinance/cpay-payment-gateway-go-sdk/sdk/request"
 )
-
-var baseRequestFields []string
-
-func init() {
-	req := request.BaseRequest{}
-	reqType := reflect.TypeOf(req)
-	for i := 0; i < reqType.NumField(); i++ {
-		baseRequestFields = append(baseRequestFields, reqType.Field(i).Name)
-	}
-}
 
 type ParameterBuilder interface {
 	BuildURL(url string, paramMap map[string]interface{}) (string, error)
@@ -73,7 +61,6 @@ func (b *WithURLBodyBuilder) BuildBody(paramMap map[string]interface{}) (string,
 		for k, v := range paramMap {
 			values.Set(k, fmt.Sprintf("%v", v))
 		}
-		//res = urllib.QueryEscape(values.Encode())
 		res = values.Encode()
 	}
 	b.Logger.Infof("Body=%s", res)

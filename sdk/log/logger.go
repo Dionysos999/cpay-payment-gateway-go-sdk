@@ -48,7 +48,7 @@ type Formatter logrus.Formatter
 func New() *BasicLogger {
 	logger := &BasicLogger{logrus.New()}
 	logger.Out = os.Stdout
-	logger.Level = logrus.Level(DebugLevel)
+	logger.Level = logrus.Level(WarnLevel)
 	logger.Formatter = &logrus.TextFormatter{
 		DisableColors: false,
 		FullTimestamp: true,

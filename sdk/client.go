@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"runtime"
 	"strings"
-	"sync"
+	"time"
 
 	"github.com/cpayfinance/cpay-payment-gateway-go-sdk/sdk/log"
 	"github.com/cpayfinance/cpay-payment-gateway-go-sdk/sdk/request"
@@ -14,10 +14,6 @@ import (
 
 var defaultUserAgent = fmt.Sprintf("CPaySDK_Go/%s (%s; %s) Golang/%s", Version, runtime.GOOS, runtime.GOARCH, strings.Trim(runtime.Version(), "go"))
 
-var (
-	httpClient *http.Client
-	loadOnce   sync.Once
-)
 
 // Client is the base struct of service clients
 type Client struct {
@@ -90,10 +86,11 @@ func (c *Client) Send(req request.Request, resp response.Response) error {
 }
 
 func (c *Client) doSend(method, url, data string, header map[string]string) (*http.Response, error) {
-	loadOnce.Do(func() {
-		c.Logger.Infof("load once http client")
-		httpClient = &http.Client{Timeout: c.Config.Timeout}
-	})
+	timeout := c.Config.Timeout
+	if timeout == 0 {
+		timeout = 15 * time.Second
+	}
+	httpClient := &http.Client{Timeout: timeout}
 
 	req, err := http.NewRequest(method, url, strings.NewReader(data))
 	if err != nil {

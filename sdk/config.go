@@ -13,14 +13,17 @@ type Config struct {
 	LogLevel log.Level
 }
 
-var defaultTarget = "api.cpay.ltd"
+var (
+	defaultSandboxTarget = "test-api.cpay.ltd"
+	defaultProdTarget    = "api.cpay.ltd"
+)
 
 // NewConfig returns a pointer of Config
 // scheme only accepts http or https
 func NewConfig() *Config {
 	return &Config{
 		Scheme:   SchemeHTTP,
-		Timeout:  15 * time.Second,
+		Timeout:  10 * time.Second,
 		LogLevel: log.WarnLevel,
 	}
 }
@@ -28,14 +31,14 @@ func NewConfig() *Config {
 func NewDefaultSandBoxEnv() *Config {
 	return &Config{
 		Scheme:   SchemeHTTP,
-		Endpoint: "8.142.157.45:9075",
+		Endpoint: defaultSandboxTarget,
 	}
 }
 
 func NewDefaultLiveEnv() *Config {
 	return &Config{
 		Scheme:   SchemeHTTPS,
-		Endpoint: defaultTarget,
+		Endpoint: defaultProdTarget,
 	}
 }
 

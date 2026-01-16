@@ -10,7 +10,7 @@ import (
 )
 
 func TestGetPaymentOrder(t *testing.T) {
-	client, _ := service.NewClientWithSecret(20000289, "b3pcduqzoi5ydsw4xa8064ne8e9h6x9j")
+	client := service.NewClientWithSecret(20000289, "b3pcduqzoi5ydsw4xa8064ne8e9h6x9j")
 
 	client.WithConfig(sdk.NewDefaultSandBoxEnv().
 		WithTimeout(time.Second * 5).

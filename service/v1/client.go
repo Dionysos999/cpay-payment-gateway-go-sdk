@@ -11,19 +11,19 @@ type Client struct {
 	sdk.Client
 }
 
-func NewClient(config *sdk.Config, credential *sdk.Credential) (client *Client, err error) {
-	client = &Client{}
+func NewClient(config *sdk.Config, credential *sdk.Credential) *Client {
+	client := &Client{}
 	if config == nil {
 		config = sdk.NewConfig().WithEndpoint(defaultEndpoint)
 	}
 
 	client.Init(serviceName).WithCredential(credential).WithConfig(config)
-	return
+	return client
 }
 
-func NewClientWithSecret(mid int64, secretKey string) (client *Client, err error) {
-	client = &Client{}
+func NewClientWithSecret(mid int64, secretKey string) *Client {
+	client := &Client{}
 	config := sdk.NewConfig().WithEndpoint(defaultEndpoint)
 	client.Init(serviceName).WithSecret(mid, secretKey).WithConfig(config)
-	return
+	return client
 }
