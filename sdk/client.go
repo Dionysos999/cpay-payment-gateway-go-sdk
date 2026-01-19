@@ -57,7 +57,10 @@ func (c *Client) Send(req request.Request, resp response.Response) error {
 		return err
 	}
 
-	sign := GenSign(mapReq, c.Credential.SecretKey)
+	sign, err := GenSign(mapReq, c.Credential.SecretKey)
+	if err != nil {
+		return fmt.Errorf("failed to generate signature: %w", err)
+	}
 	mapReq["sign"] = sign
 
 	encodedUrl, err := builder.BuildURL(req.GetURL(), mapReq)
