@@ -14,7 +14,6 @@ import (
 
 var defaultUserAgent = fmt.Sprintf("CPaySDK_Go/%s (%s; %s) Golang/%s", Version, runtime.GOOS, runtime.GOARCH, strings.Trim(runtime.Version(), "go"))
 
-
 // Client is the base struct of service clients
 type Client struct {
 	Credential  *Credential
@@ -68,7 +67,7 @@ func (c *Client) Send(req request.Request, resp response.Response) error {
 
 	endPoint := c.Config.Endpoint
 	if endPoint == "" {
-		endPoint = fmt.Sprintf("%s/%s", defaultTarget, c.ServiceName)
+		endPoint = fmt.Sprintf("%s/%s", defaultProdTarget, c.ServiceName)
 	}
 	reqUrl := fmt.Sprintf("%s://%s/%s/%s%s", c.Config.Scheme, endPoint, c.ServiceName, req.GetVersion(), encodedUrl)
 
