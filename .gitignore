@@ -1,1 +1,4 @@
 .idea
+
+# Claude 个人偏好导入区
+.claude/personal-preferences.md
